@@ -32,7 +32,17 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
             height: 100vh;
+            text-align: center;
+        }
+
+        .user-bar {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--tg-theme-secondary-bg-color, #efefef);
+            color: var(--tg-theme-text-color, #222);
+            font-size: 16px;
             text-align: center;
         }
 
@@ -73,6 +83,7 @@
 
 <body>
 
+<div class="user-bar" id="userBar">Loading...</div>
 <div class="main-container">
     <div class="score">Score: <span id="score">0</span></div>
     <button id="clickButton">Click me!</button>
@@ -81,12 +92,22 @@
 <script type="application/javascript">
     let score = 0;
 
+    // Kullanıcı bilgilerini al ve kullanıcı adını göster
+    Telegram.WebApp.ready(function() {
+        const user = Telegram.WebApp.initDataUnsafe.user;
+        const userBar = document.getElementById('userBar');
+
+        if (user) {
+            userBar.textContent = `Welcome, ${user.username || user.first_name}!`;
+        } else {
+            userBar.textContent = 'Welcome, User!';
+        }
+    });
+
     document.getElementById('clickButton').addEventListener('click', function () {
         score++;
         document.getElementById('score').textContent = score;
     });
-
-    Telegram.WebApp.ready();
 </script>
 
 </body>
