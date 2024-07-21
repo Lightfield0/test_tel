@@ -1,114 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <meta name="format-detection" content="telephone=no"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="MobileOptimized" content="176"/>
-    <meta name="HandheldFriendly" content="True"/>
-    <meta name="robots" content="noindex,nofollow"/>
-    <title>Click Game</title>
-    <script src="https://telegram.org/js/telegram-web-app.js?1"></script>
-    <script>
-        function setThemeClass() {
-            document.documentElement.className = Telegram.WebApp.colorScheme;
-        }
-
-        Telegram.WebApp.onEvent('themeChanged', setThemeClass);
-        setThemeClass();
-    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Web App</title>
     <style>
         body {
-            --bg-color: var(--tg-theme-bg-color, #fff);
-            font-family: sans-serif;
-            background-color: var(--bg-color);
-            color: var(--tg-theme-text-color, #222);
-            font-size: 14px;
-            margin: 0;
-            padding: 0;
-            color-scheme: var(--tg-color-scheme);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
             text-align: center;
-        }
-
-        .user-bar {
-            width: 100%;
-            padding: 10px;
-            background-color: var(--tg-theme-secondary-bg-color, #efefef);
-            color: var(--tg-theme-text-color, #222);
-            font-size: 16px;
-            text-align: center;
-        }
-
-        .btn {
-            font-size: 14px;
-            padding: 10px 17px;
-        }
-
-        .btn-primary {
-            background-color: var(--tg-theme-button-color, #50a8eb);
-            color: var(--tg-theme-button-text-color, #fff);
-            border: none;
-        }
-
-        button {
-            display: block;
-            width: 100%;
-            font-size: 18px;
-            margin: 15px 0;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 4px;
-            background-color: var(--tg-theme-button-color, #50a8eb);
-            color: var(--tg-theme-button-text-color, #ffffff);
-            cursor: pointer;
-        }
-
-        .main-container {
-            padding: 15px;
-        }
-
-        .score {
-            font-size: 24px;
-            margin-bottom: 20px;
         }
     </style>
 </head>
-
 <body>
+    <div class="container">
+        <h1>Welcome to Telegram Web App</h1>
+        <p id="user-info"></p>
+        <button id="get-info">Get User Info</button>
+    </div>
 
-<div class="user-bar" id="userBar">Loading...</div>
-<div class="main-container">
-    <div class="score">Score: <span id="score">0</span></div>
-    <button id="clickButton">Click me!</button>
-</div>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+        const tg = window.Telegram.WebApp;
 
-<script type="application/javascript">
-    let score = 0;
+        document.getElementById('get-info').addEventListener('click', () => {
+            const user = tg.initDataUnsafe.user;
+            document.getElementById('user-info').innerText = `Hello, ${user.first_name} ${user.last_name}`;
+        });
 
-    // Kullanıcı bilgilerini al ve kullanıcı adını göster
-    Telegram.WebApp.ready(function() {
-        const user = Telegram.WebApp.initDataUnsafe.user;
-        const userBar = document.getElementById('userBar');
-
-        if (user) {
-            userBar.textContent = `Welcome, ${user.username || user.first_name}!`;
-        } else {
-            userBar.textContent = 'Welcome, User!';
-        }
-    });
-
-    document.getElementById('clickButton').addEventListener('click', function () {
-        score++;
-        document.getElementById('score').textContent = score;
-    });
-</script>
-
+        tg.ready();
+    </script>
 </body>
 </html>
