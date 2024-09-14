@@ -34,6 +34,15 @@
             text-align: center;
         }
 
+        .user-bar {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--tg-theme-secondary-bg-color, #efefef);
+            color: var(--tg-theme-text-color, #222);
+            font-size: 16px;
+            text-align: center;
+        }
+
         .task {
             font-size: 18px;
             margin-bottom: 20px;
@@ -52,12 +61,21 @@
 </head>
 <body>
 
+<div class="user-bar" id="userBar">Loading...</div>
 <div class="task" id="task">Loading tasks...</div>
 <button id="backButton">Back to Game</button>
 
 <script>
     const tg = window.Telegram.WebApp;
     const user = tg.initDataUnsafe.user;
+    const userBar = document.getElementById('userBar');
+
+    // Kullanıcı bilgilerini göster
+    if (user) {
+        userBar.textContent = `Welcome, ${user.username || user.first_name}!`;
+    } else {
+        userBar.textContent = 'Welcome, User!';
+    }
 
     // Görevleri API'den al
     async function fetchTasks() {
