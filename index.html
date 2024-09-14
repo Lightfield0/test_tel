@@ -34,6 +34,15 @@
             text-align: center;
         }
 
+        .user-bar {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--tg-theme-secondary-bg-color, #efefef);
+            color: var(--tg-theme-text-color, #222);
+            font-size: 16px;
+            text-align: center;
+        }
+
         .score {
             font-size: 24px;
             margin-bottom: 20px;
@@ -51,14 +60,26 @@
     </style>
 </head>
 <body>
-<div class="score">Score: <span id="score">0</span></div>
-<button id="clickButton">Click me!</button>
+
+<div class="user-bar" id="userBar">Loading...</div>
+<div class="main-container">
+    <div class="score">Score: <span id="score">0</span></div>
+    <button id="clickButton">Click me!</button>
+</div>
 
 <script>
     let score = 0;
     const tg = window.Telegram.WebApp;
     const user = tg.initDataUnsafe.user;
-    
+    const userBar = document.getElementById('userBar');
+
+    // Kullanıcı bilgilerini göster
+    if (user) {
+        userBar.textContent = `Welcome, ${user.username || user.first_name}!`;
+    } else {
+        userBar.textContent = 'Welcome, User!';
+    }
+
     // Skoru güncellemek için API'yi çağır
     async function updateScore() {
         const response = await fetch('https://fa8f-176-232-153-220.ngrok-free.app/update_score', {
@@ -81,6 +102,7 @@
         }
     }
 
+    // Tıklama butonuna basıldığında
     document.getElementById('clickButton').addEventListener('click', function () {
         score++;
         document.getElementById('score').textContent = score;
@@ -89,5 +111,6 @@
 
     tg.ready();
 </script>
+
 </body>
 </html>
