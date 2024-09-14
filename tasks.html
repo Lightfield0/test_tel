@@ -78,6 +78,7 @@
     }
 
     // Görevleri API'den al
+    
     async function fetchTasks() {
         const response = await fetch(`https://4097-176-232-153-220.ngrok-free.app/daily_task?telegram_id=${user.id}`);
         if (response.ok) {
