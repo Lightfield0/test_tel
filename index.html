@@ -88,6 +88,7 @@
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ 
+                user: user,
                 telegram_id: user.id, 
                 username: user.username, 
                 score_increment: 1 
